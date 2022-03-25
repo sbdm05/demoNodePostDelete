@@ -38,9 +38,12 @@
             try {
                 const dataJSON = await fetch('/api/v1/todos');
                 const dataJS = await dataJSON.json();
-
-                dataJS.data.forEach(item => {
-                    const output = `<div class="data">Le nom est ${item.name}</div>`
+                console.log(dataJS)
+                dataJS.msg.forEach(item => {
+                                    const output = `<div class="data">
+                                        <div>${item.name}</div>
+                                        <button class="btn-delete" data-id="${item._id}" >Effacer</button>
+                                    </div>`
                     result.innerHTML += output
                 })
 
@@ -86,6 +89,39 @@
             }
             input.value = ''
         })
+
+
+        // delete form
+            result.addEventListener('click', async (e) => {
+                e.preventDefault();
+                const el = e.target;
+                const id = el.dataset.id
+
+                try {
+                    const url = `/api/v1/todos/${id}`;
+                    const options = {
+                        method: 'DELETE',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json;charset=UTF-8'
+                        },
+                        body: null
+                    };
+                    await fetch(url, options)
+                    // besoin de vider result
+                    result.innerHTML = ''
+                    fetchPeople()
+
+                }
+                catch (error) {
+                    formAlert.textContent = "Merci d'entrer une valeur"
+                }
+
+            })
+
+
+
+
     </script>
 </body>
 
