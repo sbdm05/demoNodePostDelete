@@ -36,7 +36,7 @@
         // afficher la liste du tableau
         const fetchPeople = async () => {
             try {
-                const dataJSON = await fetch('http://localhost:5000/api/users');
+                const dataJSON = await fetch('/api/users');
                 const dataJS = await dataJSON.json();
 
                 dataJS.data.forEach(item => {
