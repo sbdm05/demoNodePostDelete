@@ -77,12 +77,13 @@
                 };
                 const data = await fetch(url, options)
                 const dataPayload = await data.json()
-
-                if(dataPayload.success){
-                    result.innerHTML += `<div class="data">Le nom est ${dataPayload.msg}</div>`
-                }else{
-                    throw new Error();
-                }
+                result.innerHTML = ''
+                fetchPeople()
+                // if(dataPayload.success){
+                //     result.innerHTML += `<div class="data">${dataPayload.msg}</div>`
+                // }else{
+                //     throw new Error();
+                // }
             } 
             catch(error) {
                 formAlert.textContent = "Merci d'entrer une valeur"
