@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./normalize.css" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>Javascript</title>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-center">
+            <h5>Methode POST</h5>
+        </div>
+    </nav>
+    <main>
+        <section>
+            <form>
+                <h3>Javascript Formulaire</h3>
+                <div class="form-row">
+                    <label for="name"> enter name </label>
+                    <input type="text" name="name" id="name" class="form-input" autocomplete="false" />
+                    <small class="form-alert"></small>
+                </div>
+                <button type="submit" class="block submit-btn">submit</button>
+            </form>
+            <!-- Ici les résultats -->
+            <div class="result"></div>
+        </section>
+    </main>
+    <script>
+        const result = document.querySelector('.result')
+        // afficher la liste du tableau
+        const fetchPeople = async () => {
+            try {
+                const dataJSON = await fetch('http://localhost:5000/api/users');
+                const dataJS = await dataJSON.json();
+
+                dataJS.data.forEach(item => {
+                    const output = `<div class="data">Le nom est ${item.name}</div>`
+                    result.innerHTML += output
+                })
+
+            } catch (error) {
+                console.log(error)
+                result.innerHTML = `<div class="alert alert-danger">Erreur</div>`
+            }
+        }
+
+        fetchPeople()
+
+
+        // submit form
+        const btn = document.querySelector('.submit-btn')
+        const input = document.querySelector('.form-input')
+        const formAlert = document.querySelector('.form-alert')
+        btn.addEventListener('click', async(e) => {
+            e.preventDefault()
+            const nameValue = input.value
+            try {
+                const url = '/api/users';
+                const options = {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json;charset=UTF-8'
+                    },
+                    body: JSON.stringify({
+                        name: nameValue
+                    })
+                };
+                const data = await fetch(url, options)
+                const dataPayload = await data.json()
+
+                if(dataPayload.success){
+                    result.innerHTML += `<div class="data">Le nom est ${dataPayload.msg}</div>`
+                }else{
+                    throw new Error();
+                }
+            } 
+            catch(error) {
+                formAlert.textContent = "Merci d'entrer une valeur"
+            }
+            input.value = ''
+        })
+    </script>
+</body>
+
+</html>
