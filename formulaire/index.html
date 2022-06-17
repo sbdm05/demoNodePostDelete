@@ -34,14 +34,14 @@
     <script>
         const result = document.querySelector('.result')
         // afficher la liste du tableau
-        const fetchPeople = async () => {
+        const fetchTodos = async () => {
             try {
                 const dataJSON = await fetch('/api/v1/todos');
                 const dataJS = await dataJSON.json();
                 console.log(dataJS)
                 dataJS.msg.forEach(item => {
                                     const output = `<div class="data">
-                                        <div>${item.name}</div>
+                                        <div class="item-content">${item.name}</div>
                                         <button class="btn-delete" data-id="${item._id}" >Effacer</button>
                                     </div>`
                     result.innerHTML += output
@@ -53,7 +53,7 @@
             }
         }
 
-        fetchPeople()
+        fetchTodos()
 
 
         // submit form
@@ -78,7 +78,7 @@
                 const data = await fetch(url, options)
                 const dataPayload = await data.json()
                 result.innerHTML = ''
-                fetchPeople()
+                fetchTodos()
                 // if(dataPayload.success){
                 //     result.innerHTML += `<div class="data">${dataPayload.msg}</div>`
                 // }else{
@@ -111,7 +111,7 @@
                     await fetch(url, options)
                     // besoin de vider result
                     result.innerHTML = ''
-                    fetchPeople()
+                    fetchTodos();
 
                 }
                 catch (error) {
@@ -120,7 +120,7 @@
 
             })
 
-
+        
 
 
     </script>

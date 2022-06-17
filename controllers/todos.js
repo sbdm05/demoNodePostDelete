@@ -1,12 +1,14 @@
 const Todo = require('../models/Todo');
 
 const getTodos = async (req, res) => {
+  console.log('test');
   // utiliser la méthode Model.find({})
   try {
     const todos = await Todo.find({});
 
     res.json({ success: true, msg: todos });
   } catch (error) {
+    console.log('erreur dans get');
     res.status(500).json({ msg: error });
   }
 };

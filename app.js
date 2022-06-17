@@ -13,8 +13,8 @@ app.use(express.static('./formulaire'));
 
 app.use('/api/v1/todos', todosRoutes )
 
-
-const port = process.env.PORT || 3600;
+// adresse à utiliser en local =>  localhost:4000
+const port = process.env.PORT || 4000;
 
 const start = async()=>{
     try {
